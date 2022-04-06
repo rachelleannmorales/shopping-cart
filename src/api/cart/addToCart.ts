@@ -8,18 +8,17 @@ export const handle = async (req:Request, res: Response) => {
     const params = req.body;
     const { productId, qty } = params;
     try {
+        await Cart.getById(cartId);
         const product = await Product.getById(productId);
-        if (product) {
-            await service.addToCart(cartId, product, qty)
-                .then((cart: Cart) => {
-                    res.json(cart)
-                }).catch((e) => res.json(e.message))
-        } else {
-            res.status(404).send("Product does not exist");
-        }
+        await service.addToCart(cartId, product, qty)
+            .then((cart: Cart) => {
+                res.json(cart)
+            }).catch((e) => res.json(e.message))
     }
     catch (e) {
-        res.status(500).send(e.message());
+        if (e.type === 'NotFound') {
+            res.status(e.statusCode).send(e.data.message);
+        } else res.status(500).send('Something went wrong');
     }
 }
 
@@ -28,13 +27,12 @@ const service = {
         const cartItem: CartItem = await CartItem.getCartItem({cartId, productId: product.id});
         if (cartItem) {
             const updatedQty = qty + cartItem.quantity;
-            if (product.$hasStockAvailable(updatedQty)) {
-                await CartItem.update({id: cartItem.id, qty: updatedQty})
-            } else throw new Error(`Not enough stock left: ${product.quantity}`);
+            if (!product.$hasStockAvailable(updatedQty)) throw new Error(`Not enough stock left: ${product.quantity}`)
+            await CartItem.update({id: cartItem.id, qty: updatedQty})
+
         } else {
-            if (product.$hasStockAvailable(qty)) {
-                await CartItem.insert({cartId, productId: product.id, qty});
-            } else throw new Error(`Not enough stock left: ${product.quantity}`);
+            if (!product.$hasStockAvailable(qty)) throw new Error(`Not enough stock left: ${product.quantity}`)
+            await CartItem.insert({cartId, productId: product.id, qty});
         }
         return Cart.getById(cartId);
     },

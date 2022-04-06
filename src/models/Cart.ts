@@ -25,6 +25,9 @@ export class Cart extends BaseModel {
     static async getById (id: number) {
         return this.query()
             .findById(id)
+            .throwIfNotFound({
+                message: 'Cart does not exist',
+            })
             .withGraphJoined('items')
             .withGraphJoined('items.product');
     }

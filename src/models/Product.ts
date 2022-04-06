@@ -23,7 +23,10 @@ export class Product extends BaseModel {
         }
     }
     static getById (id: number) {
-        return this.query().findById(id);
+        return this.query().findById(id)
+            .throwIfNotFound({
+            message: 'Product does not exist',
+        });
     }
 
     $hasStockAvailable (qty: number) {
