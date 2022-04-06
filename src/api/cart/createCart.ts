@@ -10,7 +10,7 @@ export const handle = async (req:Request, res: Response) => {
 
 const service = {
     createCart: async () => {
-        return Cart.query().insertAndFetch({});
+        return Cart.query().insert({}).then((cart: Cart) => Cart.getById(cart.id));
     }
 }
 

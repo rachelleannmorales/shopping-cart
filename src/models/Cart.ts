@@ -5,6 +5,7 @@ import {Model} from "objection";
 import {CartItem} from "./CartItem";
 
 export class Cart extends BaseModel {
+    public id: number;
     private items: CartItem[];
     static get tableName () {
         return 'carts'
@@ -31,6 +32,10 @@ export class Cart extends BaseModel {
                 }
             },
         }
+    }
+
+    static async insert () {
+        return this.query().insertAndFetch({});
     }
 
     static async getById (id: number) {
