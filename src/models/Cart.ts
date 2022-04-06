@@ -5,8 +5,19 @@ import {Model} from "objection";
 import {CartItem} from "./CartItem";
 
 export class Cart extends BaseModel {
+    private items: CartItem[];
     static get tableName () {
         return 'carts'
+    }
+
+    static get virtualAttributes () {
+        return ['totalAmount']
+    }
+
+    get totalAmount () {
+        let totalAmount = 0;
+        this.items.map((item: CartItem) => totalAmount+=item.amount);
+        return totalAmount;
     }
 
     static get relationMappings () {

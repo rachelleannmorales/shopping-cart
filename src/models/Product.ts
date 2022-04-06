@@ -6,6 +6,7 @@ import {BaseModel} from "./BaseModel";
 export class Product extends BaseModel {
     public id: number;
     public quantity: number;
+    public price: number;
 
     static get tableName () {
         return 'products'

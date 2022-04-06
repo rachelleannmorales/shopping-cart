@@ -10,6 +10,7 @@ export class CartItem extends BaseModel {
     public quantity: number;
     public cartId: number;
     public productId: number;
+    private product: Product;
 
     static get tableName () {
         return 'cartItem'
@@ -26,6 +27,15 @@ export class CartItem extends BaseModel {
             },
         }
     }
+
+    static get virtualAttributes () {
+        return ['amount']
+    }
+
+    get amount () {
+        return this.product.price * this.quantity;
+    }
+
     static async update ({ id, qty }: {id: number, qty: number}) {
         return this.query()
             .patchAndFetchById(
