@@ -9,8 +9,8 @@ export const handle = async (req:Request, res: Response) => {
     const { productId, qty } = params;
     try {
         await Cart.getById(cartId);
-        const product = await Product.getById(productId);
-        await service.updateCartItem(cartId, product, qty)
+        await Product.getById(productId);
+        await service.deleteToCart(cartId, productId)
             .then((cart: Cart) => {
                 res.json(cart)
             }).catch((e) => res.json(e.message))
@@ -23,16 +23,8 @@ export const handle = async (req:Request, res: Response) => {
 }
 
 const service = {
-    updateCartItem: async (cartId: number, product: Product, qty: number) => {
-        const cartItem: CartItem = await CartItem.getCartItem({cartId, productId: product.id});
-        if (cartItem) {
-            if (qty === 0)
-                await CartItem.deleteCartItem({cartId, productId: product.id})
-            else {
-                if (!product.$hasStockAvailable(qty)) throw new Error(`Not enough stock left: ${product.quantity}`)
-                await CartItem.update({id: cartItem.id, qty})
-            }
-        }
+    deleteToCart: async (cartId: number, productId: number) => {
+        await CartItem.deleteCartItem({cartId, productId})
         return Cart.getById(cartId);
     },
 }

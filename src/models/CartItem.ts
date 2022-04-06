@@ -48,4 +48,14 @@ export class CartItem extends BaseModel {
             .where('cartId', cartId)
             .where('productId', productId).first();
     }
+
+    static async deleteCartItem ({cartId, productId}: { cartId: number, productId: number }) {
+        return this.query()
+            .delete()
+            .where('cartId', cartId)
+            .where('productId', productId)
+            .throwIfNotFound({
+                message: 'Item does not exist in the cart',
+            })
+    }
 }
