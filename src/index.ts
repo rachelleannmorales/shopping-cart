@@ -8,6 +8,8 @@ require('dotenv').config()
 const { PORT, NODE_ENV } = process.env;
 const db = require("./db/knex")(NODE_ENV);
 
+app.use('/', require('./api/routes').router)
+
 app.get("/", (req: Request, res: Response) => {
     res.json("test");
 });
