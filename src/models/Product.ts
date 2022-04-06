@@ -4,6 +4,9 @@ import {Category} from "./Category";
 import {BaseModel} from "./BaseModel";
 
 export class Product extends BaseModel {
+    public id: number;
+    public quantity: number;
+
     static get tableName () {
         return 'products'
     }
@@ -18,5 +21,12 @@ export class Product extends BaseModel {
                 }
             }
         }
+    }
+    static getById (id: number) {
+        return this.query().findById(id);
+    }
+
+    $hasStockAvailable (qty: number) {
+        return this.quantity >= qty;
     }
 }

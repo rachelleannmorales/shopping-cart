@@ -42,4 +42,10 @@ export class CartItem extends BaseModel {
                 cartId, productId, quantity: qty
             })
     }
+
+    static async getCartItem ({cartId, productId}: { cartId: number, productId: number }) {
+        return this.query()
+            .where('cartId', cartId)
+            .where('productId', productId).first();
+    }
 }

@@ -11,7 +11,6 @@ router.get('/categories', getCategories.handle)
 router.post('/cart', createCart)
 router.get('/cart/:id', getCart)
 router.post('/cart/:id/add', addToCart)
-router.post('/cart/:id/update', addToCart)
 
 module.exports = {
     router: router
