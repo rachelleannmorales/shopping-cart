@@ -5,11 +5,12 @@ const app = express();
 
 require('dotenv').config()
 
-const port = process.env.PORT;
+const { PORT, NODE_ENV } = process.env;
+const db = require("./db/knex")(NODE_ENV);
 
 app.get("/", (req: Request, res: Response) => {
     res.json("test");
 });
-app.listen(port, () => {
-    console.log(`App is listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`App is listening at http://localhost:${PORT}`);
 });
