@@ -1,0 +1,29 @@
+{
+  "name": "shopping-cart",
+  "version": "1.0.0",
+  "description": "Shopping cart API",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachelleannmorales/shopping-cart.git"
+  },
+  "author": "Rachelle Ann Morales Flamenio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rachelleannmorales/shopping-cart/issues"
+  },
+  "homepage": "https://github.com/rachelleannmorales/shopping-cart#readme",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "knex": "^1.0.5",
+    "mysql": "^2.18.1",
+    "objection": "^3.0.1",
+    "typescript": "^4.6.3"
+  }
+}
