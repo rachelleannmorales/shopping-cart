@@ -1,7 +1,7 @@
 import {Knex as TKnex} from "knex";
 import {knexSnakeCaseMappers, Model} from "objection";
 const Knex = require("knex");
-const knexConfig = require('../knexfile');
+const knexConfig = require('../../knexfile');
 
 function connect(env: any) {
     const config = knexConfig[env]

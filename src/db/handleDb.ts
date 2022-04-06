@@ -6,7 +6,8 @@ const handler = {
 
   createDb: async function () {
     const { NODE_ENV, DB_DATABASE } = process.env;
-    const config = require('../knexfile')[NODE_ENV];
+    const config = require('../../knexfile')[NODE_ENV];
+    delete config.connection.database;
     const knex = require('knex')(config)
     try {
       await knex.raw('CREATE DATABASE IF NOT EXISTS ??', DB_DATABASE)
