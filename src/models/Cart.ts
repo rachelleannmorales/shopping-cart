@@ -11,14 +11,21 @@ export class Cart extends BaseModel {
 
     static get relationMappings () {
         return {
-            products: {
+            items: {
                 relation: Model.HasManyRelation,
                 modelClass: CartItem,
                 join: {
                     from: 'carts.id',
-                    to: 'cart_item.id',
+                    to: 'cartItem.cartId',
                 }
             },
         }
+    }
+
+    static async getById (id: number) {
+        return this.query()
+            .findById(id)
+            .withGraphJoined('items')
+            .withGraphJoined('items.product');
     }
 }

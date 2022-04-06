@@ -11,7 +11,7 @@ export const handle = async (req:Request, res: Response) => {
 const service = {
     getCart: async (param: any) => {
         const { id } = param;
-        return Cart.query().findById(id).withGraphJoined('products').withGraphJoined('products.product');
+        return Cart.getById(id);
     }
 }
 

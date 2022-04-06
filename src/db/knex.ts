@@ -1,5 +1,5 @@
 import {Knex as TKnex} from "knex";
-import {Model} from "objection";
+import {knexSnakeCaseMappers, Model} from "objection";
 const Knex = require("knex");
 const knexConfig = require('../knexfile');
 
@@ -8,7 +8,7 @@ function connect(env: any) {
     if (!config) {
         throw Error(`Database connect error: invalid environment ${env}`);
     }
-    const knex: TKnex = Knex(config);
+    const knex: TKnex = Knex({...config, ...knexSnakeCaseMappers()});
     Model.knex(knex);
     return knex;
 }

@@ -13,7 +13,7 @@ export class Product extends BaseModel {
                 relation: Model.HasOneRelation,
                 modelClass: Category,
                 join: {
-                    from: 'products.category_id',
+                    from: 'products.categoryId',
                     to: 'categories.id'
                 }
             }
