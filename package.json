@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rachelleannmorales/shopping-cart#readme",
   "dependencies": {
     "@types/express": "^4.17.13",
+    "body-parser": "^1.20.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "knex": "^1.0.5",
